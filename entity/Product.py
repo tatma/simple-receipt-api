@@ -1,14 +1,14 @@
 class Product:
 
-    def __init__(self, slug, title, price, category, is_imported=False):
-        self.__slug = slug
+    def __init__(self, code, title, price, category, is_imported=False):
+        self.__code = code
         self.__title = title
         self.__price = price
         self.__category = category
         self.__is_imported = is_imported
 
     def get_slug(self) -> str:
-        return self.__slug
+        return self.__code
 
     def get_title(self) -> str:
         return self.__title
