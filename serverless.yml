@@ -1,0 +1,55 @@
+service: claranet
+provider:
+  name: aws
+  region: eu-west-1
+  runtime: python3.8
+  memorySize: 128
+
+functions:
+
+  create-receipt:
+    handler: handler/receipt/create.handler
+    role: CreateReceiptRole
+    package:
+      patterns:
+        - '!./**'
+        - 'api/**'
+        - 'common/**'
+        - 'entity/**'
+        - 'handler/receipt/**'
+      individually: true
+    events:
+      - httpApi:
+          method: POST
+          path: /receipt
+
+resources:
+  Resources:
+
+    CreateReceiptRole:
+      Type: AWS::IAM::Role
+      Properties:
+        AssumeRolePolicyDocument:
+          Statement:
+            - Action: sts:AssumeRole
+              Effect: Allow
+              Principal:
+                Service: lambda.amazonaws.com
+          Version: "2012-10-17"
+
+    LoggingPolicy:
+      Type: AWS::IAM::Policy
+      Properties:
+        PolicyDocument:
+          Statement:
+            - Action:
+                - logs:CreateLogGroup
+                - logs:CreateLogStream
+                - logs:PutLogEvents
+                - cloudwatch:PutMetricData
+              Effect: Allow
+              Resource: "*"
+          Version: "2012-10-17"
+        PolicyName: logging
+        Roles:
+          - Ref: CreateReceiptRole
