@@ -1,8 +1,9 @@
 import api.receipt
 from common import utils
 from entity.Basket import Basket
+from entity.Product import Product
+from entity.Category import Category
 from factory.ReceiptFactory import ReceiptFactory
-from factory.ProductFactory import ProductFactory
 from validator.ReceiptRequestValidator import ReceiptRequestValidator
 from exception.UnvalidValueException import UnvalidValueException
 from exception.BadRequestException import BadRequestException
@@ -63,10 +64,12 @@ def parse_items_in_request(items_in_request):
 def build_basked_from_request(items):
     basket = Basket()
     for item in items:
-        product = ProductFactory.build(
+        category = Category(item['category'].lower())
+        price_in_cents = utils.get_price_in_cents(price_in_units=item['price'])
+        product = Product(
             title=item['title'],
-            price_in_units=item['price'],
-            category=item['category'],
+            price_in_cents=price_in_cents,
+            category=category,
             is_imported=item['imported'])
         basket.add(product=product, quantity=item['quantity'])
     return basket

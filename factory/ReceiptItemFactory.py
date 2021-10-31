@@ -28,7 +28,7 @@ class ReceiptItemFactory:
 
     @staticmethod
     def __calculate_product_amount(*, product, sales_taxes):
-        product_price = product.get_price()
+        product_price = product.get_price_in_cents()
         amount = product_price + sales_taxes
         return amount
 
@@ -43,6 +43,6 @@ class ReceiptItemFactory:
 
     @staticmethod
     def __calculate_rounded_tax_amount(product, tax: Tax):
-        tax_amount = utils.calculate_tax_amount(price_in_cents=product.get_price(), tax_value=tax.value)
+        tax_amount = utils.calculate_tax_amount(price_in_cents=product.get_price_in_cents(), tax_value=tax.value)
         rounded_tax_amount = utils.round(price_in_cents=tax_amount)
         return rounded_tax_amount

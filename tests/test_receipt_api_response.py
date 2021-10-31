@@ -12,21 +12,21 @@ class TestReceiptApiResponse:
 
         product = Product(
             title='The Book',
-            price=1249,
+            price_in_cents=1249,
             category=Category.BOOK,
             is_imported=False)
         basket.add(product=product, quantity=2)
 
         product = Product(
             title='Music CD',
-            price=1499,
+            price_in_cents=1499,
             category=Category.ENTERTAINMENT,
             is_imported=False)
         basket.add(product=product, quantity=1)
 
         product = Product(
             title='Chocolate',
-            price=85,
+            price_in_cents=85,
             category=Category.FOOD,
             is_imported=False)
         basket.add(product=product, quantity=1)
@@ -45,14 +45,14 @@ class TestReceiptApiResponse:
 
         product = Product(
             title='Imported Box of Chocolate',
-            price=1000,
+            price_in_cents=1000,
             category=Category.FOOD,
             is_imported=True)
         basket.add(product=product, quantity=1)
 
         product = Product(
             title='Imported bottle of Perfume',
-            price=4750,
+            price_in_cents=4750,
             category=Category.COSMETIC,
             is_imported=True)
         basket.add(product=product, quantity=1)
@@ -70,28 +70,28 @@ class TestReceiptApiResponse:
 
         product = Product(
             title='Imported bottle of Perfume',
-            price=2799,
+            price_in_cents=2799,
             category=Category.COSMETIC,
             is_imported=True)
         basket.add(product=product, quantity=1)
 
         product = Product(
             title='Bottle of Perfume',
-            price=1899,
+            price_in_cents=1899,
             category=Category.COSMETIC,
             is_imported=False)
         basket.add(product=product, quantity=1)
 
         product = Product(
             title='Headache Pills',
-            price=975,
+            price_in_cents=975,
             category=Category.MEDICAL,
             is_imported=False)
         basket.add(product=product, quantity=1)
 
         product = Product(
             title='Imported Chocolate',
-            price=1125,
+            price_in_cents=1125,
             category=Category.FOOD,
             is_imported=True)
         basket.add(product=product, quantity=3)

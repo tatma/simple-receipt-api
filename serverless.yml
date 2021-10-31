@@ -8,7 +8,7 @@ provider:
 functions:
 
   create-receipt:
-    handler: handler/receipt/create.handler
+    handler: handler/create_receipt.handler
     role: CreateReceiptRole
     package:
       patterns:
@@ -19,7 +19,7 @@ functions:
         - 'exception/**'
         - 'factory/**'
         - 'validator/**'
-        - 'handler/receipt/**'
+        - 'handler/create_receipt.py'
       individually: true
     events:
       - httpApi:
