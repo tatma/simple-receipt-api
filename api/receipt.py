@@ -1,5 +1,5 @@
 import api.receipt_item
-import utils
+from common import utils
 from entity.Receipt import Receipt
 
 

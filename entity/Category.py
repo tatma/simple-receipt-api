@@ -2,13 +2,13 @@ from enum import Enum
 
 
 class Category(Enum):
-    FOOD = 'Food'
-    BOOKS = 'Book'
-    MEDICAL = 'Medical'
-    COSMETICS = 'Cosmetics'
-    ENTERTAINMENT = 'Entertainment'
-    OTHER = 'Other'
+    FOOD = 'food'
+    BOOK = 'book'
+    MEDICAL = 'medical'
+    COSMETIC = 'cosmetic'
+    ENTERTAINMENT = 'entertainment'
+    OTHER = 'other'
 
     @staticmethod
     def is_basic_category(category):
-        return category in [Category.FOOD, Category.BOOKS, Category.MEDICAL]
+        return category in [Category.FOOD, Category.BOOK, Category.MEDICAL]

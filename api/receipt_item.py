@@ -1,4 +1,4 @@
-import utils
+from common import utils
 from entity.ReceiptItem import ReceiptItem
 
 
