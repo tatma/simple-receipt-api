@@ -6,12 +6,19 @@ class ReceiptRequestValidator:
 
     @staticmethod
     def parse_item(item):
+        ReceiptRequestValidator.__check_mandatory_data(item)
         ReceiptRequestValidator.__validate_title(item['title'])
         ReceiptRequestValidator.__validate_price(item['price'])
         ReceiptRequestValidator.__validate_category(item['category'])
         ReceiptRequestValidator.__validate_is_imported(item['imported'])
         ReceiptRequestValidator.__validate_quantity(item['quantity'])
         return item
+
+    @staticmethod
+    def __check_mandatory_data(item):
+        for field in ['title', 'price', 'category', 'quantity']:
+            if field not in item:
+                raise UnvalidValueException(f'Field {field.capitalize()} not found in input data')
 
     @staticmethod
     def __validate_title(title):

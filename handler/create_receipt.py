@@ -14,7 +14,7 @@ def handler(event, context):
 
     try:
         items = get_items_by_event(event)
-        basket = build_basked_from_request(items)
+        basket = build_basked_by_request(items)
         receipt = ReceiptFactory.build(basket)
         body = api.receipt.build(receipt)
         status_code = 201
@@ -61,7 +61,7 @@ def parse_items_in_request(items_in_request):
     return items
 
 
-def build_basked_from_request(items):
+def build_basked_by_request(items):
     basket = Basket()
     for item in items:
         category = Category(item['category'].lower())

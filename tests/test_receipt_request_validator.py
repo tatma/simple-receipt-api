@@ -27,6 +27,14 @@ class TestReceiptRequestValidator:
         ReceiptRequestValidator.parse_item(item)
         assert True
 
+    def test_missing_mandatory_fields(self):
+        with pytest.raises(UnvalidValueException):
+            item = {
+                'title': 234,
+                'price': 9.80
+            }
+            ReceiptRequestValidator.parse_item(item)
+
     def test_unvalid_value_of_title(self):
         with pytest.raises(UnvalidValueException):
             item = {
