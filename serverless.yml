@@ -1,4 +1,4 @@
-service: claranet
+service: simple-receipt-api
 provider:
   name: aws
   region: eu-west-1
