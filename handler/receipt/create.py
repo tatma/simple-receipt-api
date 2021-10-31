@@ -1,12 +1,12 @@
-from entity.Basket import Basket
-from handler.receipt.ReceiptMaker import ReceiptMaker
 import api.receipt
 from common import utils
-import json
+from entity.Basket import Basket
+from factory.ReceiptFactory import ReceiptFactory
 from factory.ProductFactory import ProductFactory
 from validator.ReceiptRequestValidator import ReceiptRequestValidator
 from exception.UnvalidValueException import UnvalidValueException
 from exception.BadRequestException import BadRequestException
+import json
 
 
 def handler(event, context):
@@ -14,7 +14,7 @@ def handler(event, context):
     try:
         items = get_items_by_event(event)
         basket = build_basked_from_request(items)
-        receipt = ReceiptMaker.build(basket)
+        receipt = ReceiptFactory.build(basket)
         body = api.receipt.build(receipt)
         status_code = 201
 

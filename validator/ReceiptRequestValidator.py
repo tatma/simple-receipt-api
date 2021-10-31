@@ -39,3 +39,5 @@ class ReceiptRequestValidator:
     def __validate_quantity(quantity):
         if not isinstance(quantity, int):
             raise UnvalidValueException('Quantity must be an integer number')
+        if quantity < 1:
+            raise UnvalidValueException('Quantity must be greater than 0')

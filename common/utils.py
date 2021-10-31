@@ -19,3 +19,14 @@ def decimal_type(obj):
         else:
             return float(obj)
     raise TypeError
+
+
+def calculate_tax_amount(price_in_cents, tax_value):
+    tax_amount = price_in_cents * tax_value / 100
+    return tax_amount
+
+
+def round(price_in_cents):
+    import math
+    nearest = 5  # 0.05 in units
+    return math.ceil(price_in_cents / nearest) * nearest

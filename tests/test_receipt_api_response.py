@@ -1,7 +1,7 @@
 from entity.Basket import Basket
 from entity.Product import Product
 from entity.Category import Category
-from handler.receipt.ReceiptMaker import ReceiptMaker
+from factory.ReceiptFactory import ReceiptFactory
 import api.receipt
 
 
@@ -31,7 +31,7 @@ class TestReceiptApiResponse:
             is_imported=False)
         basket.add(product=product, quantity=1)
 
-        receipt = ReceiptMaker.build(basket)
+        receipt = ReceiptFactory.build(basket)
         api_receipt = api.receipt.build(receipt)
 
         assert api_receipt == {'items': [{'product': 'The Book', 'quantity': 2, 'amount': 24.98},
@@ -57,7 +57,7 @@ class TestReceiptApiResponse:
             is_imported=True)
         basket.add(product=product, quantity=1)
 
-        receipt = ReceiptMaker.build(basket)
+        receipt = ReceiptFactory.build(basket)
         api_receipt = api.receipt.build(receipt)
 
         assert api_receipt == {'items': [{'product': 'Imported Box of Chocolate', 'quantity': 1, 'amount': 10.5},
@@ -96,7 +96,7 @@ class TestReceiptApiResponse:
             is_imported=True)
         basket.add(product=product, quantity=3)
 
-        receipt = ReceiptMaker.build(basket)
+        receipt = ReceiptFactory.build(basket)
         api_receipt = api.receipt.build(receipt)
 
         assert api_receipt == {'items': [{'product': 'Imported bottle of Perfume', 'quantity': 1, 'amount': 32.19},

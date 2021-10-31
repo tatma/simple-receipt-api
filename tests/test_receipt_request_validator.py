@@ -10,7 +10,8 @@ class TestReceiptRequestValidator:
             'title': 'Hung up by Salt',
             'price': 9.80,
             'category': 'entertainment',
-            'imported': True
+            'imported': True,
+            'quantity': 1
         }
         ReceiptRequestValidator.parse_item(item)
         assert True
@@ -20,7 +21,8 @@ class TestReceiptRequestValidator:
             'title': 'Hung up by Salt',
             'price': 9.80,
             'category': 'entertainment',
-            'imported': False
+            'imported': False,
+            'quantity': 1
         }
         ReceiptRequestValidator.parse_item(item)
         assert True
@@ -31,17 +33,19 @@ class TestReceiptRequestValidator:
                 'title': 234,
                 'price': 9.80,
                 'category': 'entertainment',
-                'imported': False
+                'imported': False,
+                'quantity': 1
             }
             ReceiptRequestValidator.parse_item(item)
 
     def test_empty_value_of_title(self):
         with pytest.raises(UnvalidValueException):
             item = {
-                'title': None,
+                'title': "   ",
                 'price': 9.80,
                 'category': 'entertainment',
-                'imported': False
+                'imported': False,
+                'quantity': 1
             }
             ReceiptRequestValidator.parse_item(item)
 
@@ -51,7 +55,8 @@ class TestReceiptRequestValidator:
                 'title': 'Hung up by Salt',
                 'price': '8.45',
                 'category': 'entertainment',
-                'imported': False
+                'imported': False,
+                'quantity': 1
             }
             ReceiptRequestValidator.parse_item(item)
 
@@ -61,7 +66,8 @@ class TestReceiptRequestValidator:
                 'title': 'Hung up by Salt',
                 'price': 10,
                 'category': 'entertainment',
-                'imported': False
+                'imported': False,
+                'quantity': 1
             }
             ReceiptRequestValidator.parse_item(item)
 
@@ -71,7 +77,8 @@ class TestReceiptRequestValidator:
                 'title': 'Hung up by Salt',
                 'price': 9.80,
                 'category': 'whatisthis',
-                'imported': False
+                'imported': False,
+                'quantity': 1
             }
             ReceiptRequestValidator.parse_item(item)
 
@@ -81,6 +88,40 @@ class TestReceiptRequestValidator:
                 'title': 'Hung up by Salt',
                 'price': 9.80,
                 'category': 'entertainment',
-                'imported': 'true'
+                'imported': 'true',
+                'quantity': 1
+            }
+            ReceiptRequestValidator.parse_item(item)
+
+    def test_unvalid_format_of_quantity(self):
+        with pytest.raises(UnvalidValueException):
+            item = {
+                'title': 'Hung up by Salt',
+                'price': 9.80,
+                'category': 'entertainment',
+                'imported': False,
+                'quantity': "1"
+            }
+            ReceiptRequestValidator.parse_item(item)
+
+    def test_quantity_is_zero(self):
+        with pytest.raises(UnvalidValueException):
+            item = {
+                'title': 'Hung up by Salt',
+                'price': 9.80,
+                'category': 'entertainment',
+                'imported': False,
+                'quantity': 0
+            }
+            ReceiptRequestValidator.parse_item(item)
+
+    def test_quantity_is_less_than_zero(self):
+        with pytest.raises(UnvalidValueException):
+            item = {
+                'title': 'Hung up by Salt',
+                'price': 9.80,
+                'category': 'entertainment',
+                'imported': False,
+                'quantity': -1
             }
             ReceiptRequestValidator.parse_item(item)
