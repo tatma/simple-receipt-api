@@ -1,6 +1,11 @@
 def get_price_in_units(*, price_in_cents):
     return price_in_cents / 100
 
+
+def get_price_in_cents(*, price_in_units):
+    return price_in_units * 100
+
+
 def json_response(obj):
     import json
     return json.dumps(obj, default=decimal_type)

@@ -4,7 +4,7 @@ import api.receipt
 from common import utils
 import json
 from factory.ProductFactory import ProductFactory
-from validator.ReceiptRequestValidator import ReceiptRequestValidator
+from validator.ProductValidator import ProductValidator
 from exception.UnvalidValueException import UnvalidValueException
 from exception.BadRequestException import BadRequestException
 
@@ -55,7 +55,7 @@ def parse_items_in_request(items_in_request):
     items = []
     for item in items_in_request:
         if 'imported' not in item: item['imported'] = False
-        ReceiptRequestValidator.parse_item(item)
+        ProductValidator.parse(item)
         items.append(item)
     return items
 
@@ -70,3 +70,34 @@ def build_basked_from_request(items):
             is_imported=item['imported'])
         basket.add(product=product, quantity=item['quantity'])
     return basket
+
+
+event = {
+    'body': {
+        'items': [
+            {
+                'title': 'The boook',
+                'price': 12.49,
+                'category': 'book',
+                'quantity': 2
+            },
+            {
+                'title': 'Music CD',
+                'price': 14.99,
+                'category': 'entertainment',
+                'quantity': 1
+            },
+            {
+                'title': 'Chocolate',
+                'price': 0.85,
+                'category': 'food',
+                'quantity': 1
+            },
+        ]
+    }
+}
+event['body'] = json.dumps(event['body'])
+print(event['body'])
+print(json.dumps(event['body']))
+response = handler(event, None)
+print(response)

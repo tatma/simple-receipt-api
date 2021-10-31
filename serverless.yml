@@ -16,6 +16,9 @@ functions:
         - 'api/**'
         - 'common/**'
         - 'entity/**'
+        - 'exception/**'
+        - 'factory/**'
+        - 'validator/**'
         - 'handler/receipt/**'
       individually: true
     events:
