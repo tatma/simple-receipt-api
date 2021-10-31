@@ -11,7 +11,7 @@ The solution has been implemented as a HTTP JSON API with a single endpoint whic
 
 ### Usage example
 
-Let's make a HTTP request with your favourite client.
+Let's make a POST request with your favourite client. Remember to set `"Content-Type": "application/json"` in the header!
     
      POST https://41q21i0d50.execute-api.eu-west-1.amazonaws.com/receipt
         {
@@ -32,6 +32,9 @@ Let's make a HTTP request with your favourite client.
             ]
         }
 
+Field "imported" is not mandatory. It is *false* by default.
+Valid values for "category" are `food`, `book`, `medical`, `cosmetic`, `entertainment`, and `other`.
+
 The API *should* respond with HTTP status **201**:
 
     {
@@ -51,7 +54,7 @@ The API *should* respond with HTTP status **201**:
         "total": 25.24
     }
 
-Valid values for categories are `food`, `book`, `medical`, `cosmetic`, `entertainment`, and `other`. 
+If you want to test data defined in `exercise.md`, please refer to `exercise_payloads.md` 
 
 
 ## Architecture
