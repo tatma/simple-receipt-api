@@ -20,4 +20,4 @@ phases:
   build:
     commands:
       - python -m pytest tests
-      - serverless deploy
+      - serverless -v deploy
