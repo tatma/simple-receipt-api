@@ -1,0 +1,36 @@
+version: 0.2
+
+phases:
+
+  # installing packages in the build environment
+  install:
+    runtime-versions:
+      python: 3.x
+    commands:
+      - npm install
+      - npm install -g mocha
+      - npm install -g serverless
+
+  # eg: install dependencies
+  pre_build:
+    commands:
+      - pip install pytest
+
+  # eg: build, run tests
+  build:
+    commands:
+      - python -m pytest tests
+      - serverless deploy
+
+  # prepare artifact
+#  post_build:
+#    commands:
+
+# the file to send to CodePipeline
+#artifacts:
+#  files:
+#    - 'cloudformation-template-create-stack.json'
+#    - 'cloudformation-template-update-stack.json'
+#  base-directory: '.serverless'
+#  discard-paths: yes
+
