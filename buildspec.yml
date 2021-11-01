@@ -21,16 +21,3 @@ phases:
     commands:
       - python -m pytest tests
       - serverless deploy
-
-  # prepare artifact
-#  post_build:
-#    commands:
-
-# the file to send to CodePipeline
-#artifacts:
-#  files:
-#    - 'cloudformation-template-create-stack.json'
-#    - 'cloudformation-template-update-stack.json'
-#  base-directory: '.serverless'
-#  discard-paths: yes
-
