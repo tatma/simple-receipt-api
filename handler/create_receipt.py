@@ -14,7 +14,7 @@ def handler(event, context):
 
     try:
         items = get_items_by_event(event)
-        basket = build_basked_by_items_in_request(items)
+        basket = build_basket_by_items_in_request(items)
         receipt = ReceiptFactory.build(basket)
         body = api.receipt.build(receipt)
         status_code = 201
@@ -50,7 +50,7 @@ def get_items_by_event(event):
     return items_in_request
 
 
-def build_basked_by_items_in_request(items):
+def build_basket_by_items_in_request(items):
     basket = Basket()
     for item in items:
         if 'imported' not in item: item['imported'] = False
