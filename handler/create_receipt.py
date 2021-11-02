@@ -14,7 +14,7 @@ def handler(event, context):
 
     try:
         items = get_items_by_event(event)
-        basket = build_basked_by_request(items)
+        basket = build_basked_by_items_in_request(items)
         receipt = ReceiptFactory.build(basket)
         body = api.receipt.build(receipt)
         status_code = 201
@@ -47,23 +47,14 @@ def get_items_by_event(event):
     except:
         raise BadRequestException('Your request is invalid')
 
-    items = parse_items_in_request(items_in_request)
-
-    return items
+    return items_in_request
 
 
-def parse_items_in_request(items_in_request):
-    items = []
-    for item in items_in_request:
-        if 'imported' not in item: item['imported'] = False
-        ReceiptRequestValidator.parse_item(item)
-        items.append(item)
-    return items
-
-
-def build_basked_by_request(items):
+def build_basked_by_items_in_request(items):
     basket = Basket()
     for item in items:
+        if 'imported' not in item: item['imported'] = False
+        ReceiptRequestValidator.parse_item(item)
         category = Category(item['category'].lower())
         price_in_cents = utils.get_price_in_cents(price_in_units=item['price'])
         product = Product(
