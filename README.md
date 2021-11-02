@@ -11,6 +11,12 @@ This is a Serverless project on AWS. You can deploy the stack with the following
 
 **But hey!** Why don't you use a CD pipeline? Give a look at section [Pipeline](#pipeline).
 
+If you want to run unit tests:
+
+    python -m pytest tests
+
+*Note*: you have to be in a virtual environment.
+
 ## Overview
 The solution has been implemented as a HTTP JSON API with a single resource which takes as input a list of products (described by fields title, price, category, quantity, imported) and responds with the receipt, which takes in account sales taxes.
 
@@ -120,6 +126,7 @@ The Lambda handler `/handler/create_receipt.py` invokes several functions in ord
    * classes in `/factory`, given a basket, allow to build the receipt;
    * classes in `/validator` parse some data and, if something is not correct, raise an exception with a custom message;
    * classes in `/exception` contain the definition of custom exceptions;
+   * classes in `/tests` implement unit tests;
 
 Some procedural-style functions have been defined to accomplish general tasks:
 * `/api` contains some functions for building the API response;
