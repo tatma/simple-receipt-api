@@ -9,18 +9,18 @@ This is a Serverless project on AWS. You can deploy the stack with the following
 
     sls deploy
 
-Looking for a CD pipeline? Give a look at section [Pipeline](#pipeline).
+**But hey!** Why don't you use a CD pipeline? Give a look at section [Pipeline](#pipeline).
 
-## The solution
+## Overview
 The solution has been implemented as a HTTP JSON API with a single resource which takes as input a list of products (title, price, category, quantity, imported) and responds with the receipt, which takes in account applied taxes.
 
-**Want to have fun?** This API exposes a public endpoint: `https://qudnfgaqrl.execute-api.eu-west-1.amazonaws.com/receipt`. 
+**Want to have fun?** This API exposes a public endpoint: `https://ia1z6dfv4c.execute-api.eu-west-1.amazonaws.com/receipt`. 
 
 ### Usage example
 
 Let's make a POST request with your favourite client. Remember to set `"Content-Type": "application/json"` in the header!
     
-     POST https://qudnfgaqrl.execute-api.eu-west-1.amazonaws.com/receipt
+     POST https://ia1z6dfv4c.execute-api.eu-west-1.amazonaws.com/receipt
         {
             "items": [
                 {
