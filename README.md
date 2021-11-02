@@ -2,7 +2,7 @@
 
 This exercise focuses on using fully-managed cloud services.
 
-If you want more details about this exercise, please refer to `exercize.md`.
+If you want more details about this exercise, please refer to [`exercize.md`](./exercize.md).
 
 #### TL;DR;
 This is a Serverless project on AWS. You can deploy the stack with the following command:
@@ -12,7 +12,7 @@ This is a Serverless project on AWS. You can deploy the stack with the following
 **But hey!** Why don't you use a CD pipeline? Give a look at section [Pipeline](#pipeline).
 
 ## Overview
-The solution has been implemented as a HTTP JSON API with a single resource which takes as input a list of products (title, price, category, quantity, imported) and responds with the receipt, which takes in account applied taxes.
+The solution has been implemented as a HTTP JSON API with a single resource which takes as input a list of products (described by fields title, price, category, quantity, imported) and responds with the receipt, which takes in account sales taxes.
 
 **Want to have fun?** This API exposes a public endpoint: `https://ia1z6dfv4c.execute-api.eu-west-1.amazonaws.com/receipt`. 
 
@@ -39,8 +39,8 @@ Let's make a POST request with your favourite client. Remember to set `"Content-
             ]
         }
 
-Field "imported" is not mandatory. It is *false* by default.
-Valid values for "category" are `food`, `book`, `medical`, `cosmetic`, `entertainment`, and `other`.
+Field *imported* is not mandatory. It is *false* by default.
+Valid values for *category* are `food`, `book`, `medical`, `cosmetic`, `entertainment`, and `other`.
 
 The API *should* respond with HTTP status **201**:
 
@@ -61,7 +61,7 @@ The API *should* respond with HTTP status **201**:
         "total": 25.24
     }
 
-If you want to test data defined in `exercise.md`, please refer to `exercise_payloads.md`
+If you want to test data defined in `exercise.md`, please refer to [`exercise_payloads.md`](./exercise_payloads.md)
 
 
 ## Architecture
@@ -73,37 +73,37 @@ The API is exposed through API Gateway, which is backed by Lambda functions. Som
  * high availability;
  * pay-per-use;
 
-*Note*: it sounds great, but serverless and Lambda are not a silver bullet, so I'm just focusing on the good part of the whole story here ☺
+*Note*: it sounds great, but serverless and Lambda are not a silver bullet, so I'm just focusing on the good part of the whole story ☺
 
 The application belongs to a CloudFormation stack, which is described *as code*. **Serverless Framework** has been chosen as IaC tool, because of its simplicity in configuring this type of applications.
 
 Other services are used, but they're very marginal to understand the big picture. An **IAM** role has been assigned to the Lambda function just for giving permissions for logging to **CloudWatch**. Moreover, **S3** is used by Serverless Framework for deploying the code.
 
 ### <a name="pipeline"></a> Pipeline
-A **continuous development pipeline** has been implemented as code, in a separated project built on top of CDK.
+A **continuous development pipeline** has been described as code, in a separated project built on top of CDK.
 
-It could be versioned in a separated git project, we're all aware of the fact that the this project is just a demo ☺.   
+It should be versioned in a separated git project, but we're all aware that this is just a demo ☺.   
 
-For implmentation details, please refer to `/pipeline/README.md`.
+For implementation details, please refer to [`/pipeline/README.md`](./pipeline/README.md).
 
 ### Security
-Fully managed services have been chosen, therefore many responsibilities lie outside our duties.
+Fully-managed services have been chosen, therefore many responsibilities lie outside our duties.
 
-IAM roles used by the application and the pipeline have beed designed to respect the **principle of least privileges**.
+IAM role attached to the components of the pipeline have fine graned permissions, for accomplishing the **principle of least privileges**.
 
 Secrets have been stored in AWS Secrets Manager. 
 
 ## Project structure
 
 ### Needs
-The application is a HTTP API which takes some input data and returns other data. It's enough for detecting several duties, like:
+Let's make a very short analysis: the application is a HTTP API which takes some input data and returns other data. It's enough for detecting several duties, like:
 
 * validating input data;
 * applying the business logic, which is relatively complex;
 * in case of errors, collecting sufficient information for the client to explain what happened;
 * building the response for the client;
 
-### Code Organization
+### Code organization
 The project is organized through several directories in order to give an immediate overview of the components which the application is made of.
 Anyway, the hierarchy of these components is quite *flat*. Indeed these components are independent each other and are exploited in series by the client, i.e the Lambda handler, which acts as a driver.
 
@@ -113,7 +113,7 @@ The Lambda handler `/handler/create_receipt.py` invokes several functions in ord
 * build the basket, which contains the items;
 * build the receipt using the basket's information;
 * build the response for the remote client;
-* ...and in the meanwhile this happens, it is ready to catch different kind of exceptions, in order to produce different "reason of failure" for the client;
+* ...and in the meantime this happens, it is ready to catch different kind of exceptions, in order to produce different "reason of failure" for the client;
 
 **OOP** has been used mainly for addressing problems closer to the application domain:
    * classes in `/entity` are used for modeling;
@@ -126,9 +126,12 @@ Some procedural-style functions have been defined to accomplish general tasks:
 * `/common` contains some general purpose functions;
  
  ### Principles
-Data arrive in JSON format, so could be handled like Python dictionaries and also the receipt could be treated this way, resulting in nested structures. Imagine how difficult it could be for a new developer facing this project for the first time to understand the entire data structure. It is not immediate and would be a mess!
+Data arrive in JSON format, so could be handled like Python dictionaries and also the receipt could be treated this way, resulting in nested structures. Imagine how difficult it could be for a new developer facing this project for the first time to understand the entire data structure. It wouldn't be immediate and would be a mess!
  
-**OOP** has been used in order to avoid handling nesting dictionaries. We can take advantage of the intrinsic solidity of objects and visibility of members, implement SoC and understand faster how the application works. The developer can take a peek and understand quickly how data is organized. Furthermore, a lot of weight has been given to **SRP**, so each class is responsible for only one thing.
+**OOP** has been used in order to avoid handling nested dictionaries. We can take advantage of the intrinsic solidity of objects and visibility of members, and implement SoC and understand faster how the application works. The developer can take a peek and understand quickly how data is organized. Furthermore, a lot of weight has been given to **SRP**, so each class is responsible for only one thing.
  
 In the current implementation there is a single class for all the products, named **Product**. Taxes are calculated differently on the basis of the value of the field **category** in Product.
-Another possible implementation is the use of **inheritance**. In that case, Product would be abstract and extended by concrete classes Book, Food, Medical, and so on. The tax calculation would work based on the instance type of objects. This solution would be longer to code and there would be a distinct class for each kind of product. Above all, it brings no additional value. This phylosophy of avoiding uneuseful complexity and focusing only on satisfying requested features is the basis of the **KISS** principle.
+Another possible implementation is the use of **inheritance**. In that case, Product would be abstract and extended by concrete classes Book, Food, Medical, and so on. The tax calculation would work based on the instance type of objects. This solution would be longer to code and there would be a distinct class for each kind of product. Above all, currently it would bring no additional value. This phylosophy of avoiding uneuseful complexity and focusing only on satisfying requested features is the basis of the **KISS** principle.
+
+
+Software licensed under [GNU General Public License v3](./LICENSE.md).

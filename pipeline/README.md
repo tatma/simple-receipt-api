@@ -12,17 +12,19 @@ It is very simple and a lot more could be made! Integration tests, a recovery pl
 
 First of all you need to setup a *personal access token* within your GitHub account and store the value of the token in a secret named **simple-receipt-api/github-token** in AWS SecretsManager.
 
-Then you need to create a file `.env` containing some environment variable about the GitHub repository. E.g:
+Then you need to create a file `.env` containing some environment variable about the GitHub repository. Example:
 
     SIMPLE_RECEIPT_GITHUB_OWNER=tatma
     SIMPLE_RECEIPT_GITHUB_REPO=simple-receipt-api
     SIMPLE_RECEIPT_GITHUB_BRANCH=master
  
 
-The stack is region and account agnostic, so you need also to setup your profile.
+The stack is region and account agnostic, so you need also to setup config and credentials.
 
 ### Deploy the pipeline
 
     cdk deploy simple-receipt-cicd
 
 **Note**: you may need additional parameters, for instance `--profile myprofile`.
+
+Software licensed under [GNU General Public License v3](./LICENSE.md).
