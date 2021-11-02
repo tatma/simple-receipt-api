@@ -95,7 +95,7 @@ Secrets have been stored in AWS Secrets Manager.
 
 ## Project structure
 
-#### Needs
+### Needs
 The application is a HTTP API which takes some input data and returns other data. It's enough for detecting several duties, like:
 
 * validating input data;
@@ -103,7 +103,7 @@ The application is a HTTP API which takes some input data and returns other data
 * in case of errors, collecting sufficient information for the client to explain what happened;
 * building the response for the client;
 
-#### Code Organization
+### Code Organization
 The project is organized through several directories in order to give an immediate overview of the components which the application is made of.
 Anyway, the hierarchy of these components is quite *flat*. Indeed these components are independent each other and are exploited in series by the client, i.e the Lambda handler, which acts as a driver.
 
@@ -125,7 +125,7 @@ Some procedural-style functions have been defined to accomplish general tasks:
 * `/api` contains some functions for building the API response;
 * `/common` contains some general purpose functions;
  
- #### Principles
+ ### Principles
 Data arrive in JSON format, so could be handled like Python dictionaries and also the receipt could be treated this way, resulting in nested structures. Imagine how difficult it could be for a new developer facing this project for the first time to understand the entire data structure. It is not immediate and would be a mess!
  
 **OOP** has been used in order to avoid handling nesting dictionaries. We can take advantage of the intrinsic solidity of objects and visibility of members, implement SoC and understand faster how the application works. The developer can take a peek and understand quickly how data is organized. Furthermore, a lot of weight has been given to **SRP**, so each class is responsible for only one thing.
