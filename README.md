@@ -2,7 +2,7 @@
 
 This exercise focuses on using fully-managed cloud services.
 
-If you want more details about this exercise, please refer to [`exercize.md`](./exercize.md).
+If you want more details about this exercise, please refer to [`exercise.md`](./exercise.md).
 
 #### TL;DR;
 This is a Serverless project on AWS. You can deploy the stack with the following command:
