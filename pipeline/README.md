@@ -1,6 +1,6 @@
 # Simple Receipt CD
 
-This is a CDK project which handles the continuous development of project [Simple Receipt API](../README.md).
+This is a CDK project which handles the continuous deployment of project [Simple Receipt API](../README.md).
 
 It is based on **CodePipeline** and consists of only two *stages*, each one made of a single *action*. The first one uses downloads the git project from GitHub. The second one uses **CodeBuild** to run unit tests and deploy the application on CloudFormation.
 

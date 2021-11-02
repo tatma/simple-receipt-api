@@ -86,7 +86,7 @@ The application belongs to a CloudFormation stack, which is described *as code*.
 Other services are used, but they're very marginal to understand the big picture. An **IAM** role has been assigned to the Lambda function just for giving permissions for logging to **CloudWatch**. Moreover, **S3** is used by Serverless Framework for deploying the code.
 
 ### <a name="pipeline"></a> Pipeline
-A **continuous development pipeline** has been described as code, in a separated project built on top of CDK.
+A **continuous deployment pipeline** has been described as code, in a separated project built on top of CDK.
 
 It should be versioned in a separated git project, but we're all aware that this is just a demo ☺.   
 
