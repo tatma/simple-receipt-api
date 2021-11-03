@@ -10,8 +10,8 @@ class ReceiptRequestValidator:
         ReceiptRequestValidator.__validate_title(item['title'])
         ReceiptRequestValidator.__validate_price(item['price'])
         ReceiptRequestValidator.__validate_category(item['category'])
-        ReceiptRequestValidator.__validate_is_imported(item['imported'])
         ReceiptRequestValidator.__validate_quantity(item['quantity'])
+        if 'imported' in item: ReceiptRequestValidator.__validate_is_imported(item['imported'])
         return item
 
     @staticmethod

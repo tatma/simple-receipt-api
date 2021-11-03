@@ -1,10 +1,5 @@
-import api.receipt
 from common import utils
-from entity.Basket import Basket
-from entity.Product import Product
-from entity.Category import Category
-from factory.ReceiptFactory import ReceiptFactory
-from validator.ReceiptRequestValidator import ReceiptRequestValidator
+from factory.ReceiptResponseFactory import ReceiptResponseFactory
 from exception.UnvalidValueException import UnvalidValueException
 from exception.BadRequestException import BadRequestException
 import json
@@ -14,9 +9,7 @@ def handler(event, context):
 
     try:
         items = get_items_by_event(event)
-        basket = build_basket_by_items_in_request(items)
-        receipt = ReceiptFactory.build(basket)
-        body = api.receipt.build(receipt)
+        body = ReceiptResponseFactory.build(items)
         status_code = 201
 
     except UnvalidValueException as e:
@@ -48,19 +41,3 @@ def get_items_by_event(event):
         raise BadRequestException('Your request is invalid')
 
     return items_in_request
-
-
-def build_basket_by_items_in_request(items):
-    basket = Basket()
-    for item in items:
-        if 'imported' not in item: item['imported'] = False
-        ReceiptRequestValidator.parse_item(item)
-        category = Category(item['category'].lower())
-        price_in_cents = utils.get_price_in_cents(price_in_units=item['price'])
-        product = Product(
-            title=item['title'],
-            price_in_cents=price_in_cents,
-            category=category,
-            is_imported=item['imported'])
-        basket.add(product=product, quantity=item['quantity'])
-    return basket

@@ -30,3 +30,8 @@ def round(price_in_cents):
     import math
     nearest = 5  # 0.05 in units
     return math.ceil(price_in_cents / nearest) * nearest
+
+def get_rounded_tax_amount(price_in_cents, tax):
+    tax_amount =calculate_tax_amount(price_in_cents=price_in_cents, tax_value=tax.value)
+    rounded_tax_amount = round(price_in_cents=tax_amount)
+    return rounded_tax_amount

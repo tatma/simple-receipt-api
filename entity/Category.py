@@ -11,4 +11,5 @@ class Category(Enum):
 
     @staticmethod
     def is_basic_category(category):
-        return category in [Category.FOOD, Category.BOOK, Category.MEDICAL]
+        parsed_category = Category(category.lower())
+        return parsed_category in [Category.FOOD, Category.BOOK, Category.MEDICAL]
