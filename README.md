@@ -109,36 +109,4 @@ Let's make a very short analysis: the application is a HTTP API which takes some
 * in case of errors, collecting sufficient information for the client to explain what happened;
 * building the response for the client;
 
-### Code organization
-The project is organized through several directories in order to give an immediate overview of the components which the application is made of.
-Anyway, the hierarchy of these components is quite *flat*. Indeed these components are independent each other and are exploited in series by the client, i.e the Lambda handler, which acts as a driver.
-
-The Lambda handler `/handler/create_receipt.py` invokes several functions in order to:
-* retrieve items from event, i.e the payload;
-* validate retrieved items;
-* build the basket, which contains the items;
-* build the receipt using the basket's information;
-* build the response for the remote client;
-* ...and in the meantime this happens, it is ready to catch different kind of exceptions, in order to produce different "reason of failure" for the client;
-
-**OOP** has been used mainly for addressing problems closer to the application domain:
-   * classes in `/entity` are used for modeling;
-   * classes in `/factory`, given a basket, allow to build the receipt;
-   * classes in `/validator` parse some data and, if something is not correct, raise an exception with a custom message;
-   * classes in `/exception` contain the definition of custom exceptions;
-   * classes in `/tests` implement unit tests;
-
-Some procedural-style functions have been defined to accomplish general tasks:
-* `/api` contains some functions for building the API response;
-* `/common` contains some general purpose functions;
- 
- ### Principles
-Data arrive in JSON format, so could be handled like Python dictionaries and also the receipt could be treated this way, resulting in nested structures. Imagine how difficult it could be for a new developer facing this project for the first time to understand the entire data structure. It wouldn't be immediate and would be a mess!
- 
-**OOP** has been used in order to avoid handling nested dictionaries. We can take advantage of the intrinsic solidity of objects and visibility of members, and implement SoC and understand faster how the application works. The developer can take a peek and understand quickly how data is organized. Furthermore, a lot of weight has been given to **SRP**, so each class is responsible for only one thing.
- 
-In the current implementation there is a single class for all the products, named **Product**. Taxes are calculated differently on the basis of the value of the field **category** in Product.
-Another possible implementation is the use of **inheritance**. In that case, Product would be abstract and extended by concrete classes Book, Food, Medical, and so on. The tax calculation would work based on the instance type of objects. This solution would be longer to code and there would be a distinct class for each kind of product. Above all, currently it would bring no additional value. This phylosophy of avoiding uneuseful complexity and focusing only on satisfying requested features is the basis of the **KISS** principle.
-
-
 Software licensed under [GNU General Public License v3](./LICENSE.md).
